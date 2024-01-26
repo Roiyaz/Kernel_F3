@@ -4,7 +4,7 @@
 ## AnyKernel setup
 # begin properties
 properties() { '
-kernel.string=InfiniR Kernel by raystef66
+kernel.string=Sudah Backup BOOT dan DTBO
 do.devicecheck=1
 do.modules=0
 do.systemless=1
@@ -28,6 +28,24 @@ ramdisk_compression=auto;
 # import patching functions/variables - see for reference
 . tools/ak3-core.sh;
 
+case "$ZIPFILE" in
+    *miui*)
+    ui_print " ==============================";
+    ui_print "    Stock Based Rom detected ";
+    ui_print " ";
+    ui_print "    Auto Removed dtb and dtbo ";
+    ui_print " ==============================";
+    rm dtb;
+    rm dtbo.img;
+    ;;
+    *)
+    ui_print " ==============================";
+    ui_print " ";
+    ui_print "    AOSP Based rom detected  ";
+    ui_print " ";
+    ui_print " ==============================";
+    ;;
+esac
 
 ## AnyKernel file attributes
 # set permissions/ownership for included ramdisk files
@@ -36,6 +54,7 @@ set_perm_recursive 0 0 750 750 $ramdisk/*;
 
 ## AnyKernel install
 dump_boot;
+flash_dtbo
 
 # Begin Ramdisk Changes
 
